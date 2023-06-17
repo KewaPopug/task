@@ -32,7 +32,7 @@ return [
             //
             // DSN example:
             //    'transport' => [
-            //        'dsn' => 'smtp://user:pass@smtp.example.com:25',
+            //        'dsn' => 'smtp://profile:pass@smtp.example.com:25',
             //    ],
             //
             // See: https://symfony.com/doc/current/mailer.html#using-built-in-transports

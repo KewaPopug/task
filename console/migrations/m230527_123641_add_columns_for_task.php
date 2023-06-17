@@ -32,22 +32,22 @@ class m230527_123641_add_columns_for_task extends Migration
     // Use up()/down() to run migration code without a transaction.
     public function up()
     {
-        $this->addColumn('{{%user}}', 'surname', $this->string()->notNull());
-        $this->addColumn('{{%user}}', 'firstname', $this->string()->notNull());
-        $this->addColumn('{{%user}}', 'patronymic', $this->string()->defaultValue(null));
-        $this->addColumn('{{%user}}', 'individual_identification_number', $this->bigInteger()->notNull());
-        $this->addColumn('{{%user}}', 'date_born', $this->date()->notNull());
-        $this->addColumn('{{%user}}', 'photo_url', $this->string()->notNull());
+        $this->addColumn('{{%profile}}', 'surname', $this->string()->notNull());
+        $this->addColumn('{{%profile}}', 'firstname', $this->string()->notNull());
+        $this->addColumn('{{%profile}}', 'patronymic', $this->string()->defaultValue(null));
+        $this->addColumn('{{%profile}}', 'individual_identification_number', $this->bigInteger()->notNull());
+        $this->addColumn('{{%profile}}', 'date_born', $this->date()->notNull());
+        $this->addColumn('{{%profile}}', 'photo_url', $this->string()->notNull());
 
     }
 
     public function down()
     {
-        $this->dropColumn('{{%user}}', 'surname');
-        $this->dropColumn('{{%user}}', 'firstname');
-        $this->dropColumn('{{%user}}', 'patronymic');
-        $this->dropColumn('{{%user}}', 'individual_identification_number');
-        $this->dropColumn('{{%user}}', 'date_born');
-        $this->dropColumn('{{%user}}', 'photo_url');
+        $this->dropColumn('{{%profile}}', 'surname');
+        $this->dropColumn('{{%profile}}', 'firstname');
+        $this->dropColumn('{{%profile}}', 'patronymic');
+        $this->dropColumn('{{%profile}}', 'individual_identification_number');
+        $this->dropColumn('{{%profile}}', 'date_born');
+        $this->dropColumn('{{%profile}}', 'photo_url');
     }
 }

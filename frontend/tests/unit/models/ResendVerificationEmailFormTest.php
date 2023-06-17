@@ -18,9 +18,9 @@ class ResendVerificationEmailFormTest extends Unit
     public function _before()
     {
         $this->tester->haveFixtures([
-            'user' => [
+            'profile' => [
                 'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'user.php'
+                'dataFile' => codecept_data_dir() . 'profile.php'
             ]
         ]);
     }
@@ -34,7 +34,7 @@ class ResendVerificationEmailFormTest extends Unit
 
         verify($model->validate())->false();
         verify($model->hasErrors())->true();
-        verify($model->getFirstError('email'))->equals('There is no user with this email address.');
+        verify($model->getFirstError('email'))->equals('There is no profile with this email address.');
     }
 
     public function testEmptyEmailAddress()
@@ -58,7 +58,7 @@ class ResendVerificationEmailFormTest extends Unit
 
         verify($model->validate())->false();
         verify($model->hasErrors())->true();
-        verify($model->getFirstError('email'))->equals('There is no user with this email address.');
+        verify($model->getFirstError('email'))->equals('There is no profile with this email address.');
     }
 
     public function testSuccessfullyResend()

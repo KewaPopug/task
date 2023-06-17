@@ -1,14 +1,12 @@
 <?php
 
-namespace common\models;
+namespace backend\models;
 
-use frontend\models\UploadImageForm;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use yii\web\UploadedFile;
 
 
 /**
@@ -37,7 +35,6 @@ class User extends \mdm\admin\models\User
     const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
-    private $user;
 
     /**
      * {@inheritdoc}
@@ -63,36 +60,11 @@ class User extends \mdm\admin\models\User
     public function rules()
     {
         return [
-            ['username', 'trim'],
-            ['username', 'required'],
-            ['username', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This username has already been taken.'],
-            ['username', 'string', 'min' => 2, 'max' => 255],
-
-            ['email', 'trim'],
-            ['email', 'required'],
-            ['email', 'email'],
-            ['email', 'string', 'max' => 255],
-            ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
-
-            [['surname', 'firstname', 'individual_identification_number', 'date_born'], 'required'],
-            [['individual_identification_number'], 'integer'],
-            [['date_born'], 'safe'],
-            [['surname', 'firstname', 'patronymic'], 'string', 'max' => 255],
-            ['photo_url', 'file', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => 1024*1024],
 
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
         ];
     }
-
-
-//    public function __construct()
-//    {
-//        if($this->user == null) {
-//            $this->user = new User;
-//        }
-//    }
-
 
     /**
      * {@inheritdoc}
@@ -187,14 +159,6 @@ class User extends \mdm\admin\models\User
     }
 
     /**
-     * @param mixed $photo_url
-     */
-    public function setPhotoUrl($photo_url): void
-    {
-        $this->photo_url = $photo_url;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function validateAuthKey($authKey)
@@ -255,12 +219,6 @@ class User extends \mdm\admin\models\User
         $this->password_reset_token = null;
     }
 
-    public function activate($model)
-    {
-        $model->status = 10;
-        $model->save();
-    }
-
 
     public function generatePathToPhoto(){
         if ($this->validate()) {
@@ -269,16 +227,5 @@ class User extends \mdm\admin\models\User
         } else {
             return false;
         }
-    }
-
-
-    public function upload($model = null)
-    {
-        if($model != null){
-            $modelUpload = new UploadImageForm();
-            $modelUpload->photo_url = UploadedFile::getInstance($model, 'photo_url');
-            return $modelUpload->upload($model);
-        }
-        return false; // фото по умолчанию
     }
 }

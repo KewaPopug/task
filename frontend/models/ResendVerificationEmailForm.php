@@ -26,13 +26,13 @@ class ResendVerificationEmailForm extends Model
             ['email', 'exist',
                 'targetClass' => '\common\models\User',
                 'filter' => ['status' => User::STATUS_INACTIVE],
-                'message' => 'There is no user with this email address.'
+                'message' => 'There is no profile with this email address.'
             ],
         ];
     }
 
     /**
-     * Sends confirmation email to user
+     * Sends confirmation email to profile
      *
      * @return bool whether the email was sent
      */
@@ -51,7 +51,7 @@ class ResendVerificationEmailForm extends Model
             ->mailer
             ->compose(
                 ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
+                ['profile' => $user]
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
             ->setTo($this->email)

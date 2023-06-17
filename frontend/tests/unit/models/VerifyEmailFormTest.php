@@ -16,9 +16,9 @@ class VerifyEmailFormTest extends \Codeception\Test\Unit
     public function _before()
     {
         $this->tester->haveFixtures([
-            'user' => [
+            'profile' => [
                 'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'user.php'
+                'dataFile' => codecept_data_dir() . 'profile.php'
             ]
         ]);
     }

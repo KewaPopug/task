@@ -20,9 +20,9 @@ class ResendVerificationEmailCest
     public function _fixtures()
     {
         return [
-            'user' => [
+            'profile' => [
                 'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'user.php',
+                'dataFile' => codecept_data_dir() . 'profile.php',
             ],
         ];
     }
@@ -60,13 +60,13 @@ class ResendVerificationEmailCest
     public function checkWrongEmail(FunctionalTester $I)
     {
         $I->submitForm($this->formId, $this->formParams('wrong@email.com'));
-        $I->seeValidationError('There is no user with this email address.');
+        $I->seeValidationError('There is no profile with this email address.');
     }
 
     public function checkAlreadyVerifiedEmail(FunctionalTester $I)
     {
         $I->submitForm($this->formId, $this->formParams('test2@mail.com'));
-        $I->seeValidationError('There is no user with this email address.');
+        $I->seeValidationError('There is no profile with this email address.');
     }
 
     public function checkSendSuccessfully(FunctionalTester $I)

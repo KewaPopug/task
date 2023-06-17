@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
+use frontend\models\UploadImageForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -15,6 +16,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -79,7 +81,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Logs in a user.
+     * Logs in a profile.
      *
      * @return mixed
      */
@@ -102,7 +104,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Logs out the current user.
+     * Logs out the current profile.
      *
      * @return mixed
      */
@@ -147,14 +149,15 @@ class SiteController extends Controller
     }
 
     /**
-     * Signs user up.
+     * Signs profile up.
      *
      * @return mixed
      */
     public function actionSignup()
     {
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+
+        if ($model->load(Yii::$app->request->post()) && $model->signup($model)) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
         }

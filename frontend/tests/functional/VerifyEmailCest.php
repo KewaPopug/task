@@ -17,9 +17,9 @@ class VerifyEmailCest
     public function _fixtures()
     {
         return [
-            'user' => [
+            'profile' => [
                 'class' => UserFixture::class,
-                'dataFile' => codecept_data_dir() . 'user.php',
+                'dataFile' => codecept_data_dir() . 'profile.php',
             ],
         ];
     }

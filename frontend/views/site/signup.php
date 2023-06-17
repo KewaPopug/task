@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'patronymic')->textInput() ?>
 
-                <?= $form->field($model, 'individual_identification_number')->textInput() ?>
+                <?= $form->field($model, 'individual_identification_number', ['maxlength'=>7, 'minlength'=>7])->textInput() ?>
 
                 <?= $form->field($model, 'date_born')->textInput() ?>
 

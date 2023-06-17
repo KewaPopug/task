@@ -1,6 +1,6 @@
 <?php
 
-use app\models\User;
+use common\models\User;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -53,6 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
+
 
 
 </div>
