@@ -4,12 +4,9 @@ namespace frontend\controllers;
 
 use common\models\UpdateForm;
 use common\models\User;
-use frontend\models\UploadImageForm;
-use mdm\admin\models\form\ResetPassword;
-use Yii;
+use common\models\ChangePasswordForm;
 use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 
 class ProfileController extends \yii\web\Controller
 {
@@ -43,9 +40,9 @@ class ProfileController extends \yii\web\Controller
         ]);
     }
 
-    public function actionResetPassword($id)
+    public function actionResetPassword()
     {
-        $model = new \frontend\models\ChangePasswordForm(\Yii::$app->user->id);
+        $model = new ChangePasswordForm(\Yii::$app->user->id);
 
         if ($model->load(\Yii::$app->request->post()) && $model->validate() && $model->changePassword()) {
             \Yii::$app->session->setFlash('success', 'Password Changed!');

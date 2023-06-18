@@ -1,10 +1,9 @@
 <?php
-namespace frontend\models;
+namespace common\models;
 
 use Yii;
 use yii\base\InvalidParamException;
 use yii\base\Model;
-use common\models\User;
 
 /**
  * Change password form for current user only
@@ -74,7 +73,7 @@ class ChangePasswordForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->old_password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Incorrect password.');
             }
         }
     }

@@ -25,11 +25,12 @@ class SignupForm extends Model
 
     private $path;
 
-    public function __construct()
+    public function __construct($config = [])
     {
         if($this->user == null) {
             $this->user = new User;
         }
+        parent::__construct($config);
     }
 
     /**
@@ -53,10 +54,10 @@ class SignupForm extends Model
             ['password', 'string', 'min' => Yii::$app->params['profile.passwordMinLength']],
 
             [['surname', 'firstname', 'individual_identification_number', 'date_born'], 'required'],
-            [['individual_identification_number'], 'integer',  'min' => 12, 'max' => 19],
+            [['individual_identification_number'], 'integer',  'min' => 100000000000, 'max' => 999999999999],
             [['date_born'], 'safe'],
             [['surname', 'firstname', 'patronymic'], 'string', 'max' => 255],
-            ['photo_url', 'file', 'extensions' => ['png', 'jpg', 'gif'], 'maxSize' => 1024*1024],
+            ['photo_url', 'file', 'extensions' => ['png', 'jpg', 'gif', 'jpeg'], 'maxSize' => 1024*1024],
         ];
     }
 
@@ -84,39 +85,7 @@ class SignupForm extends Model
         $this->user->photo_url = $this->user->upload($model);
 
         return $this->user->save();
-//            && $this->sendEmail($this->user);
     }
-
-    /**
-     * Sends confirmation email to profile
-     * @param User $user profile model to with email should be send
-     * @return bool whether the email was sent
-     */
-    protected function sendEmail($user)
-    {
-        return Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['profile' => $this->user]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
-            ->send();
-    }
-//
-//    public function upload()
-//    {
-//        if ($this->validate()) {
-//            $this->path = 'uploads/' . $this->photo_url->baseName . '.' . $this->photo_url->extension;
-//            $this->photo_url->saveAs($this->path);
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
-
 
     public function getUser()
     {

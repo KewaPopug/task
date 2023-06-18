@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <p>
                 <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Смена пароля', ['reset-password', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                <?= Html::a('Смена пароля', ['reset-password'], ['class' => 'btn btn-primary']) ?>
                 <?= Html::a('Удалить аккаунт', ['delete', 'id' => $model->id], [
                     'class' => 'btn btn-danger',
                     'data' => [
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="panel-default">
                         <div class="panel-body">
                             <div class="text-center" id="author">
-                                <img src="/<?= $model->photo_url; ?>" width="222px" height="222px">
+                                <img src="/<?= $model->photo_url; ?>" width="222px" height="222px" alt="profile_photo">
                                 <h3><?= $model->username; ?></h3>
                             </div>
                         </div>

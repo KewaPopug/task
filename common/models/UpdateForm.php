@@ -18,7 +18,7 @@ class UpdateForm extends \yii\base\Model
     public $photo_url;
 
 
-    public function __construct($id)
+    public function __construct($id, $config = [])
     {
         if($this->user == null) {
             $this->user = User::find()->where(['id' => $id])->one();
@@ -33,6 +33,8 @@ class UpdateForm extends \yii\base\Model
             $this->date_born = $this->user->date_born;
             $this->photo_url = $this->user->photo_url;
         }
+
+        parent::__construct($config);
     }
 
     public function rules()
@@ -66,31 +68,16 @@ class UpdateForm extends \yii\base\Model
 
             return null;
         }
-
         $this->user->username = $this->username;
-        $this->user->email = $this->email;
-//        $this->user->setPassword($this->password);
-//        $this->user->generateAuthKey();
-        $this->user->generateEmailVerificationToken();
         $this->user->surname = $this->surname;
         $this->user->firstname = $this->firstname;
         $this->user->patronymic = $this->patronymic;
+        $this->user->email = $this->email;
+        $this->user->generateEmailVerificationToken();
         $this->user->individual_identification_number = $this->individual_identification_number;
         $this->user->date_born = $this->date_born;
-        $this->user->photo_url = $this->user->upload($user);
-
-
-//        $user->username = $this->username;
-//        $user->email = $this->email;
-//        $user->setPassword($this->password);
-//        $user->generateAuthKey();
-//        $user->generateEmailVerificationToken();
-//        $user->surname = $this->surname;
-//        $user->firstname = $this->firstname;
-//        $user->patronymic = $this->patronymic;
-//        $user->individual_identification_number = $this->individual_identification_number;
-//        $user->date_born = $this->date_born;
-//        $user->photo_url = $this->upload($model);
+        $photo_url = $this->user->upload($user);
+        if ($photo_url)  $this->user->photo_url = $photo_url;
 
         return $this->user->save();
     }

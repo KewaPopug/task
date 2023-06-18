@@ -7,7 +7,7 @@ class UploadImageForm extends Model {
     public $photo_url;
     public function rules() {
         return [
-            [['photo_url'], 'file', 'skipOnEmpty' => false, 'extensions' => 'jpg, png'],
+            [['photo_url'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'gif', 'jpeg']],
         ];
     }
     public function upload($model) {
@@ -16,9 +16,6 @@ class UploadImageForm extends Model {
             $path = 'uploads/' . $this->photo_url->baseName . '.' .
                 $this->photo_url->extension;
             $this->photo_url->saveAs($basePath . $path);
-//            $model->getUser()->photo_url = $path;
-//            $model->getUser()->save();
-//            return true;
             return $path;
         } else {
             return false;

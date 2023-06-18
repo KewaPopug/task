@@ -42,15 +42,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw',
                 'value' => function($data){
                     if($data->status != 10){
-                    return Html::a('Активировать', ['activated-user','id'=>$data->id],
-                    [
-                        'id' => 'btn-multi-view',
-                        'class' => 'btn btn-success',
-                        'data' => [
-                            'method' => 'post'
-                        ]
-                    ]);
-                    } else return '';
+                        return Html::a('Активировать', ['activated-user','id'=>$data->id],
+                        [
+                            'id' => 'btn-multi-view',
+                            'class' => 'btn btn-success',
+                            'data' => [
+                                'method' => 'post'
+                            ]
+                        ]);
+                    } else {
+                        return Html::a('Заблокировать', ['banned-user','id'=>$data->id],
+                            [
+                                'id' => 'btn-multi-view',
+                                'class' => 'btn btn-dark',
+                                'data' => [
+                                    'method' => 'post'
+                                ]
+                            ]);
+                    }
                 }
             ],
             [

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\ChangePasswordForm;
 use common\models\UpdateForm;
 use common\models\User;
 use common\models\UserSearch;
@@ -45,6 +46,20 @@ class UserController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionResetPassword($id)
+    {
+        $model = new ChangePasswordForm($id);
+
+        if ($model->load(\Yii::$app->request->post()) && $model->validate() && $model->changePassword()) {
+            \Yii::$app->session->setFlash('success', 'Password Changed!');
+            $this->redirect('index');
+        }
+
+        return $this->render('reset-password', [
+            'model' => $model,
         ]);
     }
 
@@ -121,6 +136,13 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
         $model->activate($model);
+        $this->redirect('index');
+    }
+
+    public function actionBannedUser($id)
+    {
+        $model = $this->findModel($id);
+        $model->banned($model);
         $this->redirect('index');
     }
 

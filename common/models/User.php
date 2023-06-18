@@ -261,14 +261,10 @@ class User extends \mdm\admin\models\User
         $model->save();
     }
 
-
-    public function generatePathToPhoto(){
-        if ($this->validate()) {
-            $this->photo_url->saveAs('uploads/' . $this->photo_url->baseName . '.' . $this->photo_url->extension);
-            return true;
-        } else {
-            return false;
-        }
+    public function banned($model)
+    {
+        $model->status = 9;
+        $model->save();
     }
 
 
