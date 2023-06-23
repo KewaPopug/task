@@ -54,7 +54,7 @@ class SignupForm extends Model
             ['password', 'string', 'min' => Yii::$app->params['profile.passwordMinLength']],
 
             [['surname', 'firstname', 'individual_identification_number', 'date_born'], 'required'],
-            [['individual_identification_number'], 'integer',  'min' => 100000000000, 'max' => 999999999999],
+            [['individual_identification_number'], 'integer',  'min' => 10000000000, 'max' => 99999999999],
             [['date_born'], 'safe'],
             [['surname', 'firstname', 'patronymic'], 'string', 'max' => 255],
             ['photo_url', 'file', 'extensions' => ['png', 'jpg', 'gif', 'jpeg'], 'maxSize' => 1024*1024],
@@ -64,12 +64,13 @@ class SignupForm extends Model
     /**
      * Signs profile up.
      *
-     * @return bool whether the creating new account was successful and email was sent
+     * @return array whether the creating new account was successful and email was sent
      */
     public function signup($model = null)
     {
         if (!$this->validate()) {
-            return null;
+
+            return ['message' => $this->errors];
         }
 
         $this->user->username = $this->username;
@@ -84,7 +85,11 @@ class SignupForm extends Model
         $this->user->date_born = $this->date_born;
         $this->user->photo_url = $this->user->upload($model);
 
-        return $this->user->save();
+        if ($this->user->save()) {
+            return ['success' => true, 'message' => 'Пользователь успешно зарегистрирован'];
+        } else {
+            return ['success' => false, 'message' => 'Ошибка при регистрации пользователя'];
+        }
     }
 
     public function getUser()

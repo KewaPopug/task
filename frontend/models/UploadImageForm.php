@@ -10,7 +10,7 @@ class UploadImageForm extends Model {
             [['photo_url'], 'file', 'skipOnEmpty' => false, 'extensions' => ['png', 'jpg', 'gif', 'jpeg']],
         ];
     }
-    public function upload($model) {
+    public function upload() {
         if ($this->validate()) {
             $basePath = "/var/www/task/frontend/web/";
             $path = 'uploads/' . $this->photo_url->baseName . '.' .

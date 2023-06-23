@@ -60,14 +60,15 @@ class UpdateForm extends \yii\base\Model
     /**
      * Signs profile up.
      *
-     * @return bool whether the creating new account was successful and email was sent
+     * @return array whether the creating new account was successful and email was sent
      */
     public function update($user)
     {
-        if (!$this->validate()) {
-
+        if (!$this->validate())
+        {
             return null;
         }
+
         $this->user->username = $this->username;
         $this->user->surname = $this->surname;
         $this->user->firstname = $this->firstname;
@@ -79,6 +80,10 @@ class UpdateForm extends \yii\base\Model
         $photo_url = $this->user->upload($user);
         if ($photo_url)  $this->user->photo_url = $photo_url;
 
-        return $this->user->save();
+        if ($this->user->save()) {
+            return ['success' => true, 'message' => 'Пользователь успешно обновлен'];
+        } else {
+            return ['success' => false, 'message' => 'Ошибка при обновлении пользователя'];
+        }
     }
 }

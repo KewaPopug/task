@@ -1,4 +1,7 @@
 <?php
+
+use common\components\JwtValidationData;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -13,7 +16,16 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-frontend',
+            'enableCsrfValidation' => false,
+//            'csrfParam' => '_csrf-frontend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
+        'jwt' => [
+            'class' => \sizeg\jwt\Jwt::class,
+            'key' => 'SECRET-KEY',  //typically a long random string
+            'jwtValidationData' => JwtValidationData::class,
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -41,6 +53,11 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api',
+                    'pluralize' => false,
+                ],
             ],
         ],
 

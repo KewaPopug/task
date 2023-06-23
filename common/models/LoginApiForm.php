@@ -8,7 +8,7 @@ use yii\base\Model;
 /**
  * Login form
  */
-class LoginForm extends Model
+class LoginApiForm extends Model
 {
     public $username;
     public $password;

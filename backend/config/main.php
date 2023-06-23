@@ -1,4 +1,7 @@
 <?php
+
+use common\components\JwtValidationData;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -23,11 +26,19 @@ return [
         ],
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
+        'jwt' => [
+            'class' => \sizeg\jwt\Jwt::class,
+            'key' => 'SECRET-KEY',  //typically a long random string
+            'jwtValidationData' => JwtValidationData::class,
         ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-//            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -49,13 +60,18 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-            ]
-        ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api',
+                    'pluralize' => false,
+                ],
+            ],
+        ]
     ],
     'as access' => [
         'class' => 'mdm\admin\components\AccessControl',
         'allowActions' => [
-//            'site/*',
+            'site/*',
             'admin/*',
 //            'some-controller/some-action',
             // The actions listed here will be allowed to everyone including guests.

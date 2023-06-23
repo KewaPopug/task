@@ -77,9 +77,11 @@ class User extends \mdm\admin\models\User
     /**
      * {@inheritdoc}
      */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+    public static function findIdentityByAccessToken($token, $type = null) {
+        return static::find()
+            ->where(['userID' => (string) $token->getClaim('uid') ])
+            ->andWhere(['<>', 'usr_status', 'inactive'])  //adapt this to your needs
+            ->one();
     }
 
     /**
